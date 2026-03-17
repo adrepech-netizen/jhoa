@@ -23,7 +23,7 @@
         overflow: hidden; 
         cursor: pointer;
         user-select: none;
-        -webkit-tap-highlight-color: transparent; /* Evita destellos al tocar en móviles */
+        -webkit-tap-highlight-color: transparent;
     }
 
     /* --- Nombre en el fondo --- */
@@ -33,10 +33,10 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-family: 'Dancing Script', cursive;
-        font-size: 25vw; /* Se adapta al tamaño de la pantalla */
-        color: rgba(255, 45, 117, 0.05); /* Muy sutil, casi transparente */
-        text-shadow: 0 0 30px rgba(157, 78, 221, 0.3); /* Resplandor suave */
-        z-index: 2; /* Detrás de la caja, entre los corazones */
+        font-size: 25vw; 
+        color: rgba(255, 45, 117, 0.05); 
+        text-shadow: 0 0 30px rgba(157, 78, 221, 0.3); 
+        z-index: 2; 
         white-space: nowrap;
         pointer-events: none;
     }
@@ -44,25 +44,27 @@
     /* --- Mensaje Secreto/Subliminal de Fondo --- */
     .background-secret-message {
         position: absolute;
-        bottom: 10vh; /* Posicionado hacia abajo en el fondo */
+        bottom: 12vh; /* Un poco más arriba para que no lo tape el navegador del celular */
         left: 50%;
         transform: translateX(-50%);
         font-family: 'Dancing Script', cursive;
-        font-size: 5vw; /* Tamaño sutil */
-        color: rgba(255, 255, 255, 0.015); /* EXTREMADAMENTE SUTIL (casi invisible) */
-        text-shadow: 0 0 5px rgba(255, 45, 117, 0.05); /* Brillo mínimo */
-        z-index: 3; /* Detrás de la caja, sobre el nombre */
-        white-space: nowrap;
+        font-size: 3.5vw; 
+        color: rgba(255, 255, 255, 0.04); /* Un tono ligeramente más visible para pantallas de celular */
+        text-shadow: 0 0 8px rgba(255, 45, 117, 0.15); /* Resplandor sutil */
+        z-index: 3; 
+        width: 90%; /* Permite que el texto respire */
+        text-align: center;
+        white-space: normal; /* Permite que baje a dos líneas en el celular si es necesario */
         pointer-events: none;
-        opacity: 0; /* Oculto inicialmente */
-        transition: opacity 2s ease; /* Aparición suave */
+        opacity: 0; 
+        transition: opacity 2.5s ease; 
     }
 
     /* Contenedor del texto (Efecto Cristal) */
     .main-container {
         max-width: 600px;
         width: 90%;
-        min-height: 350px; /* Altura mínima para que la caja no cambie bruscamente de tamaño */
+        min-height: 350px; 
         padding: 40px;
         position: relative;
         z-index: 10;
@@ -73,28 +75,27 @@
             0 0 25px rgba(157, 78, 221, 0.15),
             inset 0 0 10px rgba(255, 45, 117, 0.1);
         backdrop-filter: blur(8px);
-        display: grid; /* Usamos grid para apilar los textos uno sobre otro */
+        display: grid; 
         align-items: center;
     }
 
     /* Estilo de las diapositivas */
     .text-part {
-        grid-area: 1 / 1; /* Todos los textos ocupan exactamente el mismo lugar */
+        grid-area: 1 / 1; 
         font-size: 1.25rem;
         line-height: 1.8;
         font-weight: 300;
         text-align: center;
-        opacity: 0; /* Ocultos al inicio */
+        opacity: 0; 
         visibility: hidden;
-        transform: scale(0.95); /* Ligeramente más pequeños */
+        transform: scale(0.95); 
         transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
     }
 
-    /* Diapositiva activa */
     .text-part.active {
         opacity: 1;
         visibility: visible;
-        transform: scale(1); /* Vuelven a su tamaño original */
+        transform: scale(1); 
     }
 
     .highlight {
@@ -103,7 +104,6 @@
         text-shadow: 0 0 10px rgba(255, 45, 117, 0.6);
     }
 
-    /* Mensaje de abajo */
     #start-hint {
         position: absolute;
         bottom: 40px;
@@ -135,7 +135,6 @@
         animation: floatUp linear forwards;
     }
 
-    /* Animaciones */
     @keyframes floatUp {
         0% { transform: translateY(0) scale(0.5); opacity: 0; }
         10% { opacity: 0.5; } 
@@ -148,11 +147,16 @@
         50% { opacity: 1; }
     }
 
+    /* Adaptación específica para celulares */
     @media (max-width: 600px) {
         .main-container { padding: 30px 20px; min-height: 380px; }
         .text-part { font-size: 1.1rem; line-height: 1.7; }
-        .background-name { font-size: 40vw; } /* Nombre más grande en móviles */
-        .background-secret-message { font-size: 8vw; bottom: 8vh; } /* Mensaje secreto en móviles */
+        .background-name { font-size: 40vw; } 
+        .background-secret-message { 
+            font-size: 7vw; /* Más grande para que sea legible */
+            bottom: 15vh; /* Más arriba para evitar los botones del celular */
+            color: rgba(255, 255, 255, 0.05); /* Ligeramente más visible en móvil */
+        }
     }
 </style>
 </head>
@@ -191,35 +195,25 @@
     <div id="start-hint">Toca la pantalla para continuar 💖</div>
 
 <script>
-    // --- Lógica de la presentación (Diapositivas) ---
     let currentSlide = 1;
     const totalSlides = 5;
     const hint = document.getElementById('start-hint');
     const secretMessage = document.getElementById('secret-message');
 
     document.body.addEventListener('click', function() {
-        // En el primer clic cambiamos el texto de abajo
         if (currentSlide === 1) {
-            hint.style.opacity = '0'; // Lo ocultamos suavemente
+            hint.style.opacity = '0'; 
         }
 
         if (currentSlide < totalSlides) {
-            // Ocultar la diapositiva actual
             document.getElementById('part' + currentSlide).classList.remove('active');
-            
-            // Pasar a la siguiente
             currentSlide++;
-            
-            // Mostrar la nueva diapositiva
             document.getElementById('part' + currentSlide).classList.add('active');
             
-            // Si llegamos a la última (párrafo 5), activamos el mensaje secreto
             if (currentSlide === totalSlides) {
-                // Pequeña pausa antes de mostrar el mensaje secreto de fondo
                 setTimeout(() => {
-                    secretMessage.style.opacity = '1'; // El mensaje secreto aparece en el fondo
+                    secretMessage.style.opacity = '1'; 
                     
-                    // Mostramos el mensaje final de despedida
                     setTimeout(() => {
                         hint.innerHTML = "Gracias por ser tú ✨";
                         hint.style.opacity = '1';
@@ -229,7 +223,6 @@
         }
     });
 
-    // --- Lógica para crear corazones flotantes (Neon) ---
     function createHeart() {
         const bg = document.getElementById('hearts-bg');
         const heart = document.createElement('div');
@@ -237,32 +230,26 @@
         heart.classList.add('heart');
         heart.innerHTML = '❤'; 
 
-        // Posición horizontal aleatoria
         heart.style.left = Math.random() * 100 + 'vw';
         
-        // Tamaño aleatorio
         const size = Math.random() * 20 + 10;
         heart.style.fontSize = size + 'px';
         
-        // Colores neón aleatorios (Rosados y morados)
         const colors = ['#ff2d75', '#9d4edd', '#ff007f'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         heart.style.color = randomColor;
         heart.style.textShadow = `0 0 ${size/2}px ${randomColor}`; 
 
-        // Velocidad aleatoria (entre 6 y 12 segundos)
         const duration = Math.random() * 6 + 6;
         heart.style.animationDuration = duration + 's';
 
         bg.appendChild(heart);
 
-        // Eliminar del DOM al terminar de subir
         setTimeout(() => {
             heart.remove();
         }, duration * 1000);
     }
 
-    // Crear un flujo continuo
     setInterval(createHeart, 400);
 
 </script>
