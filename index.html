@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Jhoana</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #08080a; 
+        color: #ffffff;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; 
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent; /* Evita destellos al tocar en móviles */
+    }
+
+    /* --- Nombre en el fondo --- */
+    .background-name {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Dancing Script', cursive;
+        font-size: 25vw; /* Se adapta al tamaño de la pantalla */
+        color: rgba(255, 45, 117, 0.05); /* Muy sutil, casi transparente */
+        text-shadow: 0 0 30px rgba(157, 78, 221, 0.3); /* Resplandor suave */
+        z-index: 2; /* Detrás de la caja, entre los corazones */
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    /* --- Mensaje Secreto/Subliminal de Fondo --- */
+    .background-secret-message {
+        position: absolute;
+        bottom: 10vh; /* Posicionado hacia abajo en el fondo */
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Dancing Script', cursive;
+        font-size: 5vw; /* Tamaño sutil */
+        color: rgba(255, 255, 255, 0.015); /* EXTREMADAMENTE SUTIL (casi invisible) */
+        text-shadow: 0 0 5px rgba(255, 45, 117, 0.05); /* Brillo mínimo */
+        z-index: 3; /* Detrás de la caja, sobre el nombre */
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0; /* Oculto inicialmente */
+        transition: opacity 2s ease; /* Aparición suave */
+    }
+
+    /* Contenedor del texto (Efecto Cristal) */
+    .main-container {
+        max-width: 600px;
+        width: 90%;
+        min-height: 350px; /* Altura mínima para que la caja no cambie bruscamente de tamaño */
+        padding: 40px;
+        position: relative;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+            0 0 25px rgba(157, 78, 221, 0.15),
+            inset 0 0 10px rgba(255, 45, 117, 0.1);
+        backdrop-filter: blur(8px);
+        display: grid; /* Usamos grid para apilar los textos uno sobre otro */
+        align-items: center;
+    }
+
+    /* Estilo de las diapositivas */
+    .text-part {
+        grid-area: 1 / 1; /* Todos los textos ocupan exactamente el mismo lugar */
+        font-size: 1.25rem;
+        line-height: 1.8;
+        font-weight: 300;
+        text-align: center;
+        opacity: 0; /* Ocultos al inicio */
+        visibility: hidden;
+        transform: scale(0.95); /* Ligeramente más pequeños */
+        transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
+    }
+
+    /* Diapositiva activa */
+    .text-part.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1); /* Vuelven a su tamaño original */
+    }
+
+    .highlight {
+        color: #ff2d75;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(255, 45, 117, 0.6);
+    }
+
+    /* Mensaje de abajo */
+    #start-hint {
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        text-align: center;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        animation: pulse 2s infinite;
+        z-index: 11;
+        transition: opacity 0.5s ease;
+    }
+
+    /* --- Corazones de Neón --- */
+    #hearts-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        overflow: hidden;
+        pointer-events: none; 
+    }
+
+    .heart {
+        position: absolute;
+        bottom: -50px; 
+        opacity: 0;
+        animation: floatUp linear forwards;
+    }
+
+    /* Animaciones */
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(0.5); opacity: 0; }
+        10% { opacity: 0.5; } 
+        90% { opacity: 0.5; }
+        100% { transform: translateY(-110vh) scale(1.2); opacity: 0; } 
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+        .main-container { padding: 30px 20px; min-height: 380px; }
+        .text-part { font-size: 1.1rem; line-height: 1.7; }
+        .background-name { font-size: 40vw; } /* Nombre más grande en móviles */
+        .background-secret-message { font-size: 8vw; bottom: 8vh; } /* Mensaje secreto en móviles */
+    }
+</style>
+</head>
+<body>
+
+    <div id="hearts-bg"></div>
+
+    <div class="background-name">Jhoana</div>
+
+    <div class="background-secret-message" id="secret-message">excitas mi mente y cuerpo como nadie</div>
+
+    <div class="main-container">
+        
+        <p class="text-part active" id="part1">
+            He decidido que, a partir de ahora, quiero que mi camino se guíe por dos cosas: <span class="highlight">ser feliz</span> y <span class="highlight">ser completamente sincero</span>. Y la verdad es que me sorprende, y a veces hasta me asusta, lo rápido que pasa el tiempo cuando estoy contigo.
+        </p>
+
+        <p class="text-part" id="part2">
+            Antes de ti, mi realidad era muy distinta. Nunca logré encontrar a alguien que no me hiciera sentir que no teníamos nada en común. El aburrimiento y el desinterés siempre terminaban ganando. Creí que podría arreglarlo buscando a más personas, pero cada vez que lo intentaba era peor; <span class="highlight">el vacío</span> dentro de mí simplemente crecía, se hacía más profundo y nadie lograba llenarlo.
+        </p>
+
+        <p class="text-part" id="part3">
+            Hasta que llegaste tú. Contigo encontré lo que nunca antes había tenido: <span class="highlight">paz y una tranquilidad absoluta</span>.
+        </p>
+
+        <p class="text-part" id="part4">
+            Soy consciente de nuestra realidad. Sé que la diferencia de edades existe y que, de forma natural, trae consigo desventajas y retos que tendremos que enfrentar. Pero, siendo sincero, es un obstáculo que estoy dispuesto a superar. Porque todos esos años de diferencia se vuelven irrelevantes cuando me doy cuenta de que, en medio de todo ese vacío que solía sentir, <span class="highlight">tú eres la única que ha traído luz</span>.
+        </p>
+
+        <p class="text-part" id="part5">
+            El tiempo pasa rápido, pero <span class="highlight">me hace feliz</span> saber que ahora lo comparto con la persona que por fin le dio paz a mi mente y tranquilidad a mi vida.
+        </p>
+
+    </div>
+
+    <div id="start-hint">Toca la pantalla para continuar 💖</div>
+
+<script>
+    // --- Lógica de la presentación (Diapositivas) ---
+    let currentSlide = 1;
+    const totalSlides = 5;
+    const hint = document.getElementById('start-hint');
+    const secretMessage = document.getElementById('secret-message');
+
+    document.body.addEventListener('click', function() {
+        // En el primer clic cambiamos el texto de abajo
+        if (currentSlide === 1) {
+            hint.style.opacity = '0'; // Lo ocultamos suavemente
+        }
+
+        if (currentSlide < totalSlides) {
+            // Ocultar la diapositiva actual
+            document.getElementById('part' + currentSlide).classList.remove('active');
+            
+            // Pasar a la siguiente
+            currentSlide++;
+            
+            // Mostrar la nueva diapositiva
+            document.getElementById('part' + currentSlide).classList.add('active');
+            
+            // Si llegamos a la última (párrafo 5), activamos el mensaje secreto
+            if (currentSlide === totalSlides) {
+                // Pequeña pausa antes de mostrar el mensaje secreto de fondo
+                setTimeout(() => {
+                    secretMessage.style.opacity = '1'; // El mensaje secreto aparece en el fondo
+                    
+                    // Mostramos el mensaje final de despedida
+                    setTimeout(() => {
+                        hint.innerHTML = "Gracias por ser tú ✨";
+                        hint.style.opacity = '1';
+                    }, 1000);
+                }, 1000);
+            }
+        }
+    });
+
+    // --- Lógica para crear corazones flotantes (Neon) ---
+    function createHeart() {
+        const bg = document.getElementById('hearts-bg');
+        const heart = document.createElement('div');
+        
+        heart.classList.add('heart');
+        heart.innerHTML = '❤'; 
+
+        // Posición horizontal aleatoria
+        heart.style.left = Math.random() * 100 + 'vw';
+        
+        // Tamaño aleatorio
+        const size = Math.random() * 20 + 10;
+        heart.style.fontSize = size + 'px';
+        
+        // Colores neón aleatorios (Rosados y morados)
+        const colors = ['#ff2d75', '#9d4edd', '#ff007f'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.color = randomColor;
+        heart.style.textShadow = `0 0 ${size/2}px ${randomColor}`; 
+
+        // Velocidad aleatoria (entre 6 y 12 segundos)
+        const duration = Math.random() * 6 + 6;
+        heart.style.animationDuration = duration + 's';
+
+        bg.appendChild(heart);
+
+        // Eliminar del DOM al terminar de subir
+        setTimeout(() => {
+            heart.remove();
+        }, duration * 1000);
+    }
+
+    // Crear un flujo continuo
+    setInterval(createHeart, 400);
+
+</script>
+</body>
+</html>
