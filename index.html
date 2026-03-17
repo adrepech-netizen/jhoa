@@ -42,19 +42,21 @@
     }
 
     /* --- Mensaje Secreto/Subliminal de Fondo --- */
+    /* Configuración por defecto para PC/Pantallas grandes */
     .background-secret-message {
         position: absolute;
-        bottom: 12vh; /* Un poco más arriba para que no lo tape el navegador del celular */
+        bottom: 12vh;
         left: 50%;
         transform: translateX(-50%);
         font-family: 'Dancing Script', cursive;
         font-size: 3.5vw; 
-        color: rgba(255, 255, 255, 0.04); /* Un tono ligeramente más visible para pantallas de celular */
-        text-shadow: 0 0 8px rgba(255, 45, 117, 0.15); /* Resplandor sutil */
+        /* En PC lo mantenemos sutil */
+        color: rgba(255, 255, 255, 0.08); 
+        text-shadow: 0 0 10px rgba(255, 45, 117, 0.3); 
         z-index: 3; 
-        width: 90%; /* Permite que el texto respire */
+        width: 90%; 
         text-align: center;
-        white-space: normal; /* Permite que baje a dos líneas en el celular si es necesario */
+        white-space: normal; 
         pointer-events: none;
         opacity: 0; 
         transition: opacity 2.5s ease; 
@@ -79,7 +81,6 @@
         align-items: center;
     }
 
-    /* Estilo de las diapositivas */
     .text-part {
         grid-area: 1 / 1; 
         font-size: 1.25rem;
@@ -116,7 +117,6 @@
         transition: opacity 0.5s ease;
     }
 
-    /* --- Corazones de Neón --- */
     #hearts-bg {
         position: absolute;
         top: 0;
@@ -147,15 +147,29 @@
         50% { opacity: 1; }
     }
 
-    /* Adaptación específica para celulares */
+    /* =================================================== */
+    /* ADAPTACIÓN AGRESIVA PARA CELULARES (NITIDEZ MAX)   */
+    /* =================================================== */
     @media (max-width: 600px) {
         .main-container { padding: 30px 20px; min-height: 380px; }
         .text-part { font-size: 1.1rem; line-height: 1.7; }
-        .background-name { font-size: 40vw; } 
+        .background-name { font-size: 45vw; } 
+
         .background-secret-message { 
-            font-size: 7vw; /* Más grande para que sea legible */
-            bottom: 15vh; /* Más arriba para evitar los botones del celular */
-            color: rgba(255, 255, 255, 0.05); /* Ligeramente más visible en móvil */
+            font-size: 8vw; /* Más grande para legibilidad en vertical */
+            bottom: 16vh; /* Posición segura sobre controles del móvil */
+            
+            /* HACEMOS EL MENSAJE NÍTIDO Y BRILLANTE EN EL MÓVIL */
+            /* Texto base con más blanco */
+            color: rgba(255, 255, 255, 0.3); 
+            /* Aumentamos mucho el resplandor de neón rosa para dar contraste */
+            text-shadow: 
+                0 0 10px rgba(255, 45, 117, 0.7), 
+                0 0 20px rgba(255, 45, 117, 0.5),
+                0 0 30px rgba(255, 45, 117, 0.3);
+            
+            width: 85%;
+            font-weight: bold; /* Un poco más de cuerpo a la letra */
         }
     }
 </style>
@@ -169,27 +183,21 @@
     <div class="background-secret-message" id="secret-message">excitas mi mente y cuerpo como nadie</div>
 
     <div class="main-container">
-        
         <p class="text-part active" id="part1">
             He decidido que, a partir de ahora, quiero que mi camino se guíe por dos cosas: <span class="highlight">ser feliz</span> y <span class="highlight">ser completamente sincero</span>. Y la verdad es que me sorprende, y a veces hasta me asusta, lo rápido que pasa el tiempo cuando estoy contigo.
         </p>
-
         <p class="text-part" id="part2">
             Antes de ti, mi realidad era muy distinta. Nunca logré encontrar a alguien que no me hiciera sentir que no teníamos nada en común. El aburrimiento y el desinterés siempre terminaban ganando. Creí que podría arreglarlo buscando a más personas, pero cada vez que lo intentaba era peor; <span class="highlight">el vacío</span> dentro de mí simplemente crecía, se hacía más profundo y nadie lograba llenarlo.
         </p>
-
         <p class="text-part" id="part3">
             Hasta que llegaste tú. Contigo encontré lo que nunca antes había tenido: <span class="highlight">paz y una tranquilidad absoluta</span>.
         </p>
-
         <p class="text-part" id="part4">
             Soy consciente de nuestra realidad. Sé que la diferencia de edades existe y que, de forma natural, trae consigo desventajas y retos que tendremos que enfrentar. Pero, siendo sincero, es un obstáculo que estoy dispuesto a superar. Porque todos esos años de diferencia se vuelven irrelevantes cuando me doy cuenta de que, en medio de todo ese vacío que solía sentir, <span class="highlight">tú eres la única que ha traído luz</span>.
         </p>
-
         <p class="text-part" id="part5">
             El tiempo pasa rápido, pero <span class="highlight">me hace feliz</span> saber que ahora lo comparto con la persona que por fin le dio paz a mi mente y tranquilidad a mi vida.
         </p>
-
     </div>
 
     <div id="start-hint">Toca la pantalla para continuar 💖</div>
@@ -210,14 +218,18 @@
             currentSlide++;
             document.getElementById('part' + currentSlide).classList.add('active');
             
+            // Al llegar al final de la presentación de diapositivas
             if (currentSlide === totalSlides) {
+                // Pequeña pausa dramática
                 setTimeout(() => {
+                    // APARECE EL MENSAJE SECRETO EN EL FONDO
                     secretMessage.style.opacity = '1'; 
                     
+                    // Mostramos el cierre final
                     setTimeout(() => {
                         hint.innerHTML = "Gracias por ser tú ✨";
                         hint.style.opacity = '1';
-                    }, 1000);
+                    }, 1500);
                 }, 1000);
             }
         }
@@ -226,32 +238,23 @@
     function createHeart() {
         const bg = document.getElementById('hearts-bg');
         const heart = document.createElement('div');
-        
         heart.classList.add('heart');
         heart.innerHTML = '❤'; 
-
         heart.style.left = Math.random() * 100 + 'vw';
-        
         const size = Math.random() * 20 + 10;
         heart.style.fontSize = size + 'px';
-        
         const colors = ['#ff2d75', '#9d4edd', '#ff007f'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         heart.style.color = randomColor;
         heart.style.textShadow = `0 0 ${size/2}px ${randomColor}`; 
-
         const duration = Math.random() * 6 + 6;
         heart.style.animationDuration = duration + 's';
-
         bg.appendChild(heart);
-
         setTimeout(() => {
             heart.remove();
         }, duration * 1000);
     }
-
     setInterval(createHeart, 400);
-
 </script>
 </body>
 </html>
