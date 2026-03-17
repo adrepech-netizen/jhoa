@@ -26,7 +26,6 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* --- Nombre en el fondo --- */
     .background-name {
         position: absolute;
         top: 50%;
@@ -42,7 +41,6 @@
         transition: all 0.5s ease;
     }
 
-    /* --- Mensaje Secreto/Subliminal de Fondo (PC) --- */
     .background-secret-message {
         position: absolute;
         bottom: 12vh;
@@ -61,7 +59,6 @@
         transition: opacity 2.5s ease; 
     }
 
-    /* Contenedor del texto (Efecto Cristal) */
     .main-container {
         max-width: 600px;
         width: 90%;
@@ -146,9 +143,6 @@
         50% { opacity: 1; }
     }
 
-    /* =================================================== */
-    /* ADAPTACIÓN PARA CELULARES                           */
-    /* =================================================== */
     @media (max-width: 600px) {
         .main-container { padding: 30px 20px; min-height: 380px; }
         .text-part { font-size: 1.1rem; line-height: 1.7; }
@@ -166,23 +160,22 @@
             text-align: center;
         }
 
-        /* AHORA SÍ: MENSAJE SECRETO MUCHO MÁS VISIBLE EN CELULAR */
         .background-secret-message { 
-            font-size: 8.5vw; /* Un poco más grande */
+            font-size: 8.5vw; 
             bottom: 12vh; 
-            /* Letra mucho más blanca y visible (40% de opacidad en vez de 8%) */
             color: rgba(255, 255, 255, 0.4); 
-            /* Resplandor rosa neón mucho más fuerte */
             text-shadow: 
                 0 0 5px rgba(255, 45, 117, 0.8),
                 0 0 15px rgba(255, 45, 117, 0.6); 
             width: 90%;
-            z-index: 20; /* Lo ponemos por encima para que no se pierda */
+            z-index: 20; 
         }
     }
 </style>
 </head>
 <body>
+
+    <audio id="audio-deseo" src="te_deseo.ogg"></audio>
 
     <div id="hearts-bg"></div>
 
@@ -215,6 +208,7 @@
     const totalSlides = 5;
     const hint = document.getElementById('start-hint');
     const secretMessage = document.getElementById('secret-message');
+    const audioDeseo = document.getElementById('audio-deseo');
 
     document.body.addEventListener('click', function() {
         if (currentSlide === 1) {
@@ -226,7 +220,14 @@
             currentSlide++;
             document.getElementById('part' + currentSlide).classList.add('active');
             
+            // AL LLEGAR A LA ÚLTIMA DIAPOSITIVA
             if (currentSlide === totalSlides) {
+                
+                // Reproduce el audio OGG de tu voz
+                if(audioDeseo) {
+                    audioDeseo.play().catch(error => console.log("No se pudo reproducir el audio", error));
+                }
+
                 setTimeout(() => {
                     secretMessage.style.opacity = '1'; 
                     
@@ -234,7 +235,7 @@
                         hint.innerHTML = "Gracias por ser tú ✨";
                         hint.style.opacity = '1';
                     }, 1500);
-                }, 1000);
+                }, 400); // Ajusté un poco el tiempo para que cuadre perfecto con el audio
             }
         }
     });
