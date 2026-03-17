@@ -27,6 +27,7 @@
     }
 
     /* --- Nombre en el fondo --- */
+    /* Configuración general (se mantiene sutil para PC) */
     .background-name {
         position: absolute;
         top: 50%;
@@ -39,10 +40,10 @@
         z-index: 2; 
         white-space: nowrap;
         pointer-events: none;
+        transition: all 0.5s ease;
     }
 
-    /* --- Mensaje Secreto/Subliminal de Fondo --- */
-    /* Configuración por defecto para PC/Pantallas grandes */
+    /* --- Mensaje Secreto/Subliminal de Fondo (mismo que antes) --- */
     .background-secret-message {
         position: absolute;
         bottom: 12vh;
@@ -50,7 +51,6 @@
         transform: translateX(-50%);
         font-family: 'Dancing Script', cursive;
         font-size: 3.5vw; 
-        /* En PC lo mantenemos sutil */
         color: rgba(255, 255, 255, 0.08); 
         text-shadow: 0 0 10px rgba(255, 45, 117, 0.3); 
         z-index: 3; 
@@ -148,28 +148,38 @@
     }
 
     /* =================================================== */
-    /* ADAPTACIÓN AGRESIVA PARA CELULARES (NITIDEZ MAX)   */
+    /* ADAPTACIÓN EXTREMA PARA CELULARES (NITIDEZ MAX)    */
     /* =================================================== */
     @media (max-width: 600px) {
         .main-container { padding: 30px 20px; min-height: 380px; }
         .text-part { font-size: 1.1rem; line-height: 1.7; }
-        .background-name { font-size: 45vw; } 
 
-        .background-secret-message { 
-            font-size: 8vw; /* Más grande para legibilidad en vertical */
-            bottom: 16vh; /* Posición segura sobre controles del móvil */
+        /* AJUSTES PARA EL NOMBRE "JHOANA" EN EL CELULAR */
+        .background-name { 
+            font-size: 60vw; /* Llenamos el ancho de la pantalla */
+            top: 55%; /* Ligeramente más abajo */
+            left: 50%;
+            transform: translate(-50%, -50%);
             
-            /* HACEMOS EL MENSAJE NÍTIDO Y BRILLANTE EN EL MÓVIL */
-            /* Texto base con más blanco */
-            color: rgba(255, 255, 255, 0.3); 
-            /* Aumentamos mucho el resplandor de neón rosa para dar contraste */
+            /* HACEMOS EL NOMBRE NÍTIDO Y BRILLANTE EN EL MÓVIL */
+            /* Aumentamos la opacidad base (color) */
+            color: rgba(255, 45, 117, 0.3); 
+            /* Aumentamos mucho el resplandor de neón rosa */
             text-shadow: 
-                0 0 10px rgba(255, 45, 117, 0.7), 
-                0 0 20px rgba(255, 45, 117, 0.5),
-                0 0 30px rgba(255, 45, 117, 0.3);
+                0 0 10px rgba(255, 45, 117, 0.6), 
+                0 0 20px rgba(157, 78, 221, 0.4);
             
+            width: auto;
+            text-align: center;
+        }
+
+        /* Ajuste de nitidez para el mensaje secreto también en celular (opcional si lo quieres más nítido) */
+        .background-secret-message { 
+            font-size: 7vw; 
+            bottom: 15vh; 
+            color: rgba(255, 255, 255, 0.08); 
+            text-shadow: 0 0 10px rgba(255, 45, 117, 0.3); 
             width: 85%;
-            font-weight: bold; /* Un poco más de cuerpo a la letra */
         }
     }
 </style>
@@ -187,7 +197,7 @@
             He decidido que, a partir de ahora, quiero que mi camino se guíe por dos cosas: <span class="highlight">ser feliz</span> y <span class="highlight">ser completamente sincero</span>. Y la verdad es que me sorprende, y a veces hasta me asusta, lo rápido que pasa el tiempo cuando estoy contigo.
         </p>
         <p class="text-part" id="part2">
-            Antes de ti, mi realidad era muy distinta. Nunca logré encontrar a alguien que no me hiciera sentir que no teníamos nada en común. El aburrimiento y el desinterés siempre terminaban ganando. Creí que podría arreglarlo buscando a más personas, pero cada vez que lo intentaba era peor; <span class="highlight">el vacío</span> dentro de mí simplemente crecía, se hacía más profundo y nadie lograba llenarlo.
+            Antes de ti, mi realityad era muy distinta. Nunca logré encontrar a alguien que no me hiciera sentir que no teníamos nada en común. El aburrimiento y el desinterés siempre terminaban ganando. Creí que podría arreglarlo buscando a más personas, pero cada vez que lo intentaba era peor; <span class="highlight">el vacío</span> dentro de mí simplemente crecía, se hacía más profundo y nadie lograba llenarlo.
         </p>
         <p class="text-part" id="part3">
             Hasta que llegaste tú. Contigo encontré lo que nunca antes había tenido: <span class="highlight">paz y una tranquilidad absoluta</span>.
@@ -218,14 +228,10 @@
             currentSlide++;
             document.getElementById('part' + currentSlide).classList.add('active');
             
-            // Al llegar al final de la presentación de diapositivas
             if (currentSlide === totalSlides) {
-                // Pequeña pausa dramática
                 setTimeout(() => {
-                    // APARECE EL MENSAJE SECRETO EN EL FONDO
                     secretMessage.style.opacity = '1'; 
                     
-                    // Mostramos el cierre final
                     setTimeout(() => {
                         hint.innerHTML = "Gracias por ser tú ✨";
                         hint.style.opacity = '1';
