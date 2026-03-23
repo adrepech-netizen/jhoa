@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Jhoana</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        /* Degradado pastel en tonos lila y malva suave */
+        background: radial-gradient(circle at center, #ffffff 0%, #F3E5F5 50%, #E1BEE7 100%);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* --- Fondo de partículas personalizadas --- */
+    #particles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .particle {
+        position: absolute;
+        animation: floatParticle linear infinite;
+        opacity: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+
+    @keyframes floatParticle {
+        0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+        15% { opacity: 0.9; }
+        85% { opacity: 0.9; }
+        100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+    }
+
+    /* --- Pantalla de Inicio (Para Jhoana) --- */
+    #intro-screen {
+        position: absolute;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: opacity 0.8s ease;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+    .intro-name {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 2.2rem;
+        letter-spacing: 8px;
+        color: #7E57C2;
+        text-transform: uppercase;
+        animation: pulseIntro 2.5s infinite;
+        text-shadow: 0 0 15px rgba(209, 196, 233, 0.8);
+    }
+
+    .tap-hint {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.85rem;
+        color: #A1887F;
+        margin-top: 20px;
+        opacity: 0.7;
+        letter-spacing: 2px;
+    }
+
+    @keyframes pulseIntro {
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 20px #AB47BC; }
+    }
+
+    /* --- Tarjeta de Cristal Central (Oculta al inicio) --- */
+    #main-card {
+        display: none; /* Se oculta hasta hacer clic */
+    }
+
+    .glass-card {
+        position: relative;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.4); 
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        padding: 60px 40px;
+        text-align: center;
+        max-width: 800px;
+        width: 90%;
+        box-shadow: 
+            0 20px 40px rgba(200, 180, 190, 0.15),
+            inset 0 0 20px rgba(255, 255, 255, 0.6);
+        animation: revealCard 1.5s ease-out both; 
+    }
+
+    .heartbeat-box {
+        animation: gentleHeartbeat 4s ease-in-out infinite, revealCard 1.5s ease-out both;
+    }
+
+    @keyframes revealCard {
+        0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes gentleHeartbeat {
+        0%, 100% { box-shadow: 0 10px 30px rgba(200, 180, 190, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.5); }
+        50% { box-shadow: 0 15px 40px rgba(200, 180, 190, 0.3), inset 0 0 30px rgba(255, 255, 255, 0.8); }
+    }
+
+    /* --- Tipografías --- */
+    .te-amo {
+        font-family: 'Alex Brush', cursive;
+        font-size: 6rem;
+        color: #AB47BC;
+        text-shadow: 
+            0 0 15px #D1C4E9,
+            0 2px 4px rgba(123, 31, 162, 0.2);
+        line-height: 1.1;
+        margin-bottom: 10px;
+        animation: fadeInText 2s ease-in-out 0.8s both;
+    }
+
+    .para-toda-mi-vida {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.5rem;
+        letter-spacing: 12px;
+        text-transform: uppercase;
+        color: #7E57C2;
+        margin-top: 20px;
+        animation: fadeInText 2s ease-in-out 1.5s both;
+    }
+
+    @keyframes fadeInText {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* --- Adaptación impecable para móviles --- */
+    @media (max-width: 600px) {
+        .glass-card {
+            padding: 50px 20px;
+        }
+        .intro-name {
+            font-size: 8vw;
+        }
+        .te-amo {
+            font-size: 18vw; 
+            text-shadow: 
+                0 0 10px #D1C4E9,
+                0 2px 5px rgba(123, 31, 162, 0.2);
+        }
+        .para-toda-mi-vida {
+            font-size: 4vw;
+            letter-spacing: 6px; 
+            margin-top: 15px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div id="particles-container"></div>
+
+    <div id="intro-screen" onclick="mostrarMensaje()">
+        <p class="intro-name">Para Jhoana</p>
+        <p class="tap-hint"></p>
+    </div>
+
+    <div id="main-card" class="glass-card heartbeat-box">
+        <h1 class="te-amo">Te amo</h1>
+        <h2 class="para-toda-mi-vida">para toda mi vida</h2>
+    </div>
+
+<script>
+    // Función para manejar el clic y la transición
+    function mostrarMensaje() {
+        const intro = document.getElementById('intro-screen');
+        const mainCard = document.getElementById('main-card');
+
+        // Desvanecer la pantalla de inicio
+        intro.style.opacity = '0';
+        intro.style.pointerEvents = 'none'; // Evita dobles clics
+
+        // Esperar a que termine de desvanecerse para mostrar la tarjeta
+        setTimeout(() => {
+            intro.style.display = 'none';
+            mainCard.style.display = 'block';
+        }, 800);
+    }
+
+    // Generador de partículas con pasteles vibrantes
+    function createParticles() {
+        const container = document.getElementById('particles-container');
+        const particleCount = 28; 
+
+        const pastelColors = [
+            '#FF85A2', '#60C5FF', '#50DE93', 
+            '#B370FF', '#FFCA28', '#FF9F68'
+        ];
+
+        for (let i = 0; i < particleCount; i++) {
+            let particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            if (i % 3 === 0) {
+                particle.innerText = '❤'; 
+                particle.style.fontSize = `${Math.random() * 0.6 + 0.6}rem`;
+            } else {
+                particle.innerText = 'JyA'; 
+                particle.style.fontSize = `${Math.random() * 0.8 + 1}rem`;
+            }
+
+            const randomPastelColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+            
+            particle.style.color = randomPastelColor;
+            particle.style.textShadow = `
+                0 0 8px ${randomPastelColor}, 
+                1px 1px 3px rgba(0, 0, 0, 0.15)`; 
+
+            particle.style.left = `${Math.random() * 95}vw`;
+            let duration = Math.random() * 12 + 10; 
+            let delay = Math.random() * 10; 
+            
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+
+            container.appendChild(particle);
+        }
+    }
+
+    window.onload = createParticles;
+</script>
+
+</body>
+</html>
